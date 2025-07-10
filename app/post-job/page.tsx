@@ -29,11 +29,14 @@ export default function PostJob() {
 
   return (
     <div className="max-w-2xl mx-auto">
-      <h1 className="text-3xl font-light text-gray-900 mb-8">Post a Job</h1>
+      <div className="text-center mb-8">
+        <h1 className="text-3xl font-light text-slate-900 mb-2">Post a Job</h1>
+        <p className="text-slate-600">Find the perfect candidate for your team</p>
+      </div>
       
-      <form onSubmit={handleSubmit} className="bg-white border border-gray-200 p-8 space-y-6">
+      <form onSubmit={handleSubmit} className="card-subtle p-8 space-y-6">
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
+          <label className="block text-sm font-semibold text-slate-700 mb-2">
             Job Title
           </label>
           <input
@@ -41,12 +44,13 @@ export default function PostJob() {
             required
             value={formData.title}
             onChange={(e) => setFormData({...formData, title: e.target.value})}
-            className="w-full p-3 border border-gray-300 text-sm focus:outline-none focus:border-gray-500 transition-colors"
+            className="input-field"
+            placeholder="e.g., Senior Frontend Developer"
           />
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
+          <label className="block text-sm font-semibold text-slate-700 mb-2">
             Company
           </label>
           <input
@@ -54,12 +58,13 @@ export default function PostJob() {
             required
             value={formData.company}
             onChange={(e) => setFormData({...formData, company: e.target.value})}
-            className="w-full p-3 border border-gray-300 text-sm focus:outline-none focus:border-gray-500 transition-colors"
+            className="input-field"
+            placeholder="e.g., Tech Solutions Ltd"
           />
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
+          <label className="block text-sm font-semibold text-slate-700 mb-2">
             Location
           </label>
           <input
@@ -67,18 +72,19 @@ export default function PostJob() {
             required
             value={formData.location}
             onChange={(e) => setFormData({...formData, location: e.target.value})}
-            className="w-full p-3 border border-gray-300 text-sm focus:outline-none focus:border-gray-500 transition-colors"
+            className="input-field"
+            placeholder="e.g., Nairobi, Kenya"
           />
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
+          <label className="block text-sm font-semibold text-slate-700 mb-2">
             Job Type
           </label>
           <select
             value={formData.type}
             onChange={(e) => setFormData({...formData, type: e.target.value as any})}
-            className="w-full p-3 border border-gray-300 text-sm focus:outline-none focus:border-gray-500 transition-colors"
+            className="input-field"
           >
             <option value="full-time">Full Time</option>
             <option value="part-time">Part Time</option>
@@ -88,20 +94,20 @@ export default function PostJob() {
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
-            Salary (Optional)
+          <label className="block text-sm font-semibold text-slate-700 mb-2">
+            Salary <span className="text-slate-500 font-normal">(Optional)</span>
           </label>
           <input
             type="text"
             value={formData.salary}
             onChange={(e) => setFormData({...formData, salary: e.target.value})}
             placeholder="e.g., KES 100,000 - 150,000"
-            className="w-full p-3 border border-gray-300 text-sm focus:outline-none focus:border-gray-500 transition-colors"
+            className="input-field"
           />
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
+          <label className="block text-sm font-semibold text-slate-700 mb-2">
             Job Description
           </label>
           <textarea
@@ -109,26 +115,27 @@ export default function PostJob() {
             rows={5}
             value={formData.description}
             onChange={(e) => setFormData({...formData, description: e.target.value})}
-            className="w-full p-3 border border-gray-300 text-sm focus:outline-none focus:border-gray-500 transition-colors resize-none"
+            className="input-field resize-none"
+            placeholder="Describe the role, responsibilities, and what makes this opportunity exciting..."
           />
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
-            Requirements (one per line)
+          <label className="block text-sm font-semibold text-slate-700 mb-2">
+            Requirements <span className="text-slate-500 font-normal">(one per line)</span>
           </label>
           <textarea
             required
             rows={4}
             value={formData.requirements}
             onChange={(e) => setFormData({...formData, requirements: e.target.value})}
-            placeholder="3+ years experience&#10;React/Next.js&#10;TypeScript"
-            className="w-full p-3 border border-gray-300 text-sm focus:outline-none focus:border-gray-500 transition-colors resize-none"
+            placeholder="3+ years experience&#10;React/Next.js&#10;TypeScript&#10;Strong communication skills"
+            className="input-field resize-none"
           />
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
+          <label className="block text-sm font-semibold text-slate-700 mb-2">
             Contact Email
           </label>
           <input
@@ -136,13 +143,14 @@ export default function PostJob() {
             required
             value={formData.email}
             onChange={(e) => setFormData({...formData, email: e.target.value})}
-            className="w-full p-3 border border-gray-300 text-sm focus:outline-none focus:border-gray-500 transition-colors"
+            className="input-field"
+            placeholder="hr@company.com"
           />
         </div>
 
         <button
           type="submit"
-          className="w-full bg-gray-900 text-white py-3 px-6 text-sm hover:bg-gray-800 transition-colors"
+          className="w-full btn-accent py-3 font-semibold"
         >
           Post Job
         </button>
