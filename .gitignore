@@ -273,3 +273,4 @@ config/local.ts
 coverage/
 .nyc_output/
 junit.xml
+/generated/prisma
