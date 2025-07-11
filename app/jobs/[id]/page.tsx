@@ -1,6 +1,7 @@
 import { getJobById } from '@/lib/jobs'
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
+import ShareButton from '@/components/ShareButton'
 
 export default async function JobDetail({ params }: { params: { id: string } }) {
   const job = await getJobById(params.id);
@@ -23,9 +24,12 @@ export default async function JobDetail({ params }: { params: { id: string } }) 
       
       <div className="card-subtle p-6 space-y-6">
         <div className="space-y-4">
-          <div className="space-y-2">
-            <h1 className="text-2xl font-medium text-slate-900">{job.title}</h1>
-            <p className="text-lg text-emerald-600 font-medium">{job.company}</p>
+          <div className="flex items-start justify-between">
+            <div className="space-y-2 flex-1">
+              <h1 className="text-2xl font-medium text-slate-900">{job.title}</h1>
+              <p className="text-lg text-emerald-600 font-medium">{job.company}</p>
+            </div>
+            <ShareButton job={job} />
           </div>
           
           <div className="flex flex-wrap items-center gap-3">
@@ -45,13 +49,13 @@ export default async function JobDetail({ params }: { params: { id: string } }) 
             </span>
           </div>
         </div>
-
+        
         <div className="space-y-6">
           <div className="space-y-3">
             <h2 className="text-lg font-medium text-slate-900">Description</h2>
             <p className="text-slate-700 leading-relaxed">{job.description}</p>
           </div>
-
+          
           <div className="space-y-3">
             <h2 className="text-lg font-medium text-slate-900">Requirements</h2>
             <ul className="space-y-2">
@@ -64,7 +68,7 @@ export default async function JobDetail({ params }: { params: { id: string } }) 
             </ul>
           </div>
         </div>
-
+        
         <div className="bg-emerald-50 p-4 rounded-lg border border-emerald-100">
           <h3 className="font-medium text-slate-900 mb-2">How to Apply</h3>
           <p className="text-slate-600 text-sm mb-3">
@@ -79,5 +83,5 @@ export default async function JobDetail({ params }: { params: { id: string } }) 
         </div>
       </div>
     </div>
-  )
+  );
 }
