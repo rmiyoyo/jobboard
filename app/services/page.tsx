@@ -1,5 +1,16 @@
-export default function Services() {
-  const services = [
+import type { NextPage } from 'next';
+
+interface Service {
+  title: string;
+  description: string;
+  features: string[];
+  pricing: string;
+  buttonText: string;
+  color: 'emerald' | 'blue' | 'purple' | 'slate';
+}
+
+const Services: NextPage = () => {
+  const services: Service[] = [
     {
       title: "Resume Writing",
       description: "Professional resume writing services to help you stand out from the competition.",
@@ -64,8 +75,22 @@ export default function Services() {
     return colorMap[color as keyof typeof colorMap] || colorMap.slate;
   };
 
+  const getServiceIcon = (index: number) => {
+    const icons = [
+      // Resume Writing
+      <path key={0} strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />,
+      // Interview Coaching
+      <path key={1} strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />,
+      // Career Consultation
+      <path key={2} strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />,
+      // HR Consulting
+      <path key={3} strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+    ];
+    return icons[index] || icons[0];
+  };
+
   return (
-    <div className="max-w-4xl mx-auto">
+    <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
       <div className="text-center mb-12">
         <h1 className="text-3xl font-light text-slate-900 mb-4">
           HR <span className="text-emerald-600 font-medium">Services</span>
@@ -77,22 +102,15 @@ export default function Services() {
       
       <div className="grid gap-8 md:grid-cols-2">
         {services.map((service, index) => (
-          <div key={index} className="card-subtle p-6 space-y-6 group hover:scale-[1.02] transition-transform duration-200">
+          <div 
+            key={index} 
+            className="card-subtle p-6 space-y-6 group hover:scale-[1.02] transition-transform duration-200"
+            data-testid="service-card"
+          >
             <div className="space-y-4">
               <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${getColorClasses(service.color)} flex items-center justify-center`}>
                 <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  {index === 0 && (
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                  )}
-                  {index === 1 && (
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
-                  )}
-                  {index === 2 && (
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
-                  )}
-                  {index === 3 && (
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
-                  )}
+                  {getServiceIcon(index)}
                 </svg>
               </div>
               
@@ -115,7 +133,10 @@ export default function Services() {
               <div className="text-slate-900 font-semibold text-lg">
                 {service.pricing}
               </div>
-              <button className="w-full btn-primary font-semibold">
+              <button 
+                className="w-full btn-primary font-semibold"
+                aria-label={`${service.buttonText} for ${service.title}`}
+              >
                 {service.buttonText}
               </button>
             </div>
@@ -137,5 +158,7 @@ export default function Services() {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
+
+export default Services;
