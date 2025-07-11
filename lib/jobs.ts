@@ -1,62 +1,141 @@
-import { prisma } from './db';
-import { generateUniqueSlug } from './utils';
+import { prisma } from './db'
+import { generateUniqueSlug } from './utils'
+import { cache } from 'react'
 
 export type Job = {
-  id: string;
-  title: string;
-  company: string;
-  location: string;
-  type: string;
-  salary?: string;
-  description: string;
-  requirements: string[];
-  email: string;
-  postedAt: Date;
-  slug: string;
-};
-
-export async function getJobs(): Promise<Job[]> {
-  const jobs = await prisma.job.findMany({
-    orderBy: { postedAt: 'desc' },
-  });
-  return jobs.map(job => ({
-    ...job,
-    salary: job.salary === null ? undefined : job.salary,
-  }));
+  id: string
+  title: string
+  company: string
+  location: string
+  type: string
+  salary?: string
+  description: string
+  requirements: string[]
+  email: string
+  postedAt: Date
+  slug: string
 }
 
-export async function getJobById(id: string): Promise<Job | null> {
-  const job = await prisma.job.findUnique({
-    where: { id },
-  });
-  if (!job) return null;
+export type PaginatedJobs = {
+  jobs: Job[]
+  totalJobs: number
+  totalPages: number
+  currentPage: number
+  hasNextPage: boolean
+  hasPreviousPage: boolean
+}
+
+const JOBS_PER_PAGE = 8
+
+// Cache for all jobs (up to 50 for performance)
+export const getJobs = cache(async (): Promise<Job[]> => {
+  try {
+    const jobs = await prisma.job.findMany({
+      orderBy: { postedAt: 'desc' },
+      take: 50,
+    })
+    
+    return jobs.map(job => ({
+      ...job,
+      salary: job.salary === null ? undefined : job.salary,
+    }))
+  } catch (error) {
+    console.error('Error fetching jobs:', error)
+    return []
+  }
+})
+
+// New paginated function for server-side pagination
+export const getPaginatedJobs = cache(async (page: number = 1): Promise<PaginatedJobs> => {
+  try {
+    const skip = (page - 1) * JOBS_PER_PAGE
+    
+    const [jobs, totalJobs] = await Promise.all([
+      prisma.job.findMany({
+        orderBy: { postedAt: 'desc' },
+        skip,
+        take: JOBS_PER_PAGE,
+      }),
+      prisma.job.count()
+    ])
+    
+    const totalPages = Math.ceil(totalJobs / JOBS_PER_PAGE)
+    
+    return {
+      jobs: jobs.map(job => ({
+        ...job,
+        salary: job.salary === null ? undefined : job.salary,
+      })),
+      totalJobs,
+      totalPages,
+      currentPage: page,
+      hasNextPage: page < totalPages,
+      hasPreviousPage: page > 1,
+    }
+  } catch (error) {
+    console.error('Error fetching paginated jobs:', error)
+    return {
+      jobs: [],
+      totalJobs: 0,
+      totalPages: 0,
+      currentPage: 1,
+      hasNextPage: false,
+      hasPreviousPage: false,
+    }
+  }
+})
+
+// Client-side pagination helper
+export function paginateJobs(jobs: Job[], page: number = 1): PaginatedJobs {
+  const startIndex = (page - 1) * JOBS_PER_PAGE
+  const endIndex = startIndex + JOBS_PER_PAGE
+  const paginatedJobs = jobs.slice(startIndex, endIndex)
+  const totalPages = Math.ceil(jobs.length / JOBS_PER_PAGE)
+  
   return {
-    ...job,
-    salary: job.salary === null ? undefined : job.salary,
-  };
+    jobs: paginatedJobs,
+    totalJobs: jobs.length,
+    totalPages,
+    currentPage: page,
+    hasNextPage: page < totalPages,
+    hasPreviousPage: page > 1,
+  }
 }
 
-export async function getJobBySlug(slug: string): Promise<Job | null> {
-  const job = await prisma.job.findUnique({
-    where: { slug },
-  });
-  if (!job) return null;
-  return {
-    ...job,
-    salary: job.salary === null ? undefined : job.salary,
-  };
-}
+export const getJobBySlug = cache(async (slug: string): Promise<Job | null> => {
+  try {
+    const job = await prisma.job.findUnique({
+      where: { slug },
+    })
+    
+    if (!job) return null
+    
+    return {
+      ...job,
+      salary: job.salary === null ? undefined : job.salary,
+    }
+  } catch (error) {
+    console.error('Error fetching job by slug:', error)
+    return null
+  }
+})
 
 export async function addJob(jobData: Omit<Job, 'id' | 'postedAt' | 'slug'>): Promise<Job> {
-  const slug = await generateUniqueSlug(jobData.title, jobData.company);
-  const job = await prisma.job.create({
-    data: {
-      ...jobData,
-      slug,
-    },
-  });
-  return {
-    ...job,
-    salary: job.salary === null ? undefined : job.salary,
-  };
+  try {
+    const slug = await generateUniqueSlug(jobData.title, jobData.company)
+    const job = await prisma.job.create({
+      data: {
+        ...jobData,
+        slug,
+      },
+    })
+    
+    return {
+      ...job,
+      salary: job.salary === null ? undefined : job.salary,
+    }
+  } catch (error) {
+    console.error('Error creating job:', error)
+    throw new Error('Failed to create job')
+  }
 }

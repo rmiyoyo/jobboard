@@ -3,34 +3,119 @@
 @tailwind utilities;
 
 @layer base {
-  body {
-    @apply bg-slate-50 text-slate-900;
+  html {
+    scroll-behavior: smooth;
   }
+  
+  body {
+    @apply bg-slate-50 text-slate-900 antialiased;
+  }
+  
+  * {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+}
+
+@layer utilities {
+  .line-clamp-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+  
+  .focus\:not-sr-only:focus {
+    position: static;
+    width: auto;
+    height: auto;
+    padding: inherit;
+    margin: inherit;
+    overflow: visible;
+    clip: auto;
+    white-space: normal;
+  }
+
+  /* Pagination animations */
+  .fade-in {
+    animation: fadeIn 0.3s ease-in-out;
+  }
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(8px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  .slide-in-up {
+    animation: slideInUp 0.4s ease-out;
+  }
+  
+  @keyframes slideInUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  .stagger-children > * {
+    animation: slideInUp 0.4s ease-out;
+  }
+  
+  .stagger-children > *:nth-child(1) { animation-delay: 0.05s; }
+  .stagger-children > *:nth-child(2) { animation-delay: 0.1s; }
+  .stagger-children > *:nth-child(3) { animation-delay: 0.15s; }
+  .stagger-children > *:nth-child(4) { animation-delay: 0.2s; }
+  .stagger-children > *:nth-child(5) { animation-delay: 0.25s; }
+  .stagger-children > *:nth-child(6) { animation-delay: 0.3s; }
+  .stagger-children > *:nth-child(7) { animation-delay: 0.35s; }
+  .stagger-children > *:nth-child(8) { animation-delay: 0.4s; }
 }
 
 @layer components {
   .card-subtle {
-    @apply bg-white border border-slate-200/60 shadow-sm hover:shadow-md hover:border-slate-300/60 transition-all duration-200;
+    @apply bg-white border border-slate-200/60 shadow-sm hover:shadow-md hover:border-slate-300/60 transition-all duration-200 rounded-lg;
   }
   
   .btn-primary {
-    @apply bg-slate-800 text-white px-6 py-2.5 text-sm font-medium hover:bg-slate-700 transition-all duration-200 shadow-sm hover:shadow-md;
+    @apply bg-slate-800 text-white px-6 py-2.5 text-sm font-medium hover:bg-slate-700 transition-all duration-200 shadow-sm hover:shadow-md rounded-md focus:outline-none focus:ring-2 focus:ring-slate-500 focus:ring-offset-2;
   }
   
   .btn-secondary {
-    @apply border border-slate-300 text-slate-700 px-6 py-2.5 text-sm font-medium hover:border-slate-400 hover:bg-slate-50 transition-all duration-200;
+    @apply border border-slate-300 text-slate-700 px-6 py-2.5 text-sm font-medium hover:border-slate-400 hover:bg-slate-50 transition-all duration-200 rounded-md focus:outline-none focus:ring-2 focus:ring-slate-500 focus:ring-offset-2;
   }
   
   .btn-accent {
-    @apply bg-emerald-600 text-white px-6 py-2.5 text-sm font-medium hover:bg-emerald-700 transition-all duration-200 shadow-sm hover:shadow-md;
+    @apply bg-emerald-600 text-white px-6 py-2.5 text-sm font-medium hover:bg-emerald-700 transition-all duration-200 shadow-sm hover:shadow-md rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2;
   }
   
   .input-field {
-    @apply w-full p-3 border border-slate-300 text-sm focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500/20 transition-all duration-200;
+    @apply w-full p-3 border border-slate-300 text-sm focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500/20 transition-all duration-200 rounded-md;
   }
   
   .nav-link {
-    @apply text-slate-600 hover:text-slate-900 transition-colors duration-200 font-medium;
+    @apply text-slate-600 hover:text-slate-900 transition-colors duration-200 font-medium focus:outline-none focus:text-slate-900;
   }
   
   .job-type-badge {
@@ -39,5 +124,26 @@
   
   .salary-badge {
     @apply text-sm text-slate-700 bg-slate-100 px-2.5 py-1 rounded-full font-medium;
+  }
+  
+  /* Pagination styles */
+  .pagination-button {
+    @apply inline-flex items-center px-3 py-2 text-sm font-medium border border-slate-300 bg-white text-slate-700 hover:bg-slate-50 hover:border-slate-400 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2;
+  }
+  
+  .pagination-button:first-child {
+    @apply rounded-l-md;
+  }
+  
+  .pagination-button:last-child {
+    @apply rounded-r-md;
+  }
+  
+  .pagination-button.active {
+    @apply bg-emerald-600 text-white border-emerald-600 hover:bg-emerald-700 hover:border-emerald-700;
+  }
+  
+  .pagination-button:disabled {
+    @apply opacity-50 cursor-not-allowed hover:bg-white hover:border-slate-300;
   }
 }
