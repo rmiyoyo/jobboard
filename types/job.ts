@@ -9,4 +9,5 @@ export interface Job {
   requirements: string[];
   postedAt: Date;
   email: string;
+  slug: string;
 }
