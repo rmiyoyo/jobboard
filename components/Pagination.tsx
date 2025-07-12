@@ -34,38 +34,29 @@ const Pagination = memo(function Pagination({
 
   const getVisiblePages = () => {
     const pages: (number | string)[] = []
-    const maxVisible = 5
+    const windowSize = 7
+    const halfWindow = Math.floor(windowSize / 2)
 
-    if (totalPages <= maxVisible) {
-      // Show all pages if total is small
-      for (let i = 1; i <= totalPages; i++) {
+    pages.push(1)
+
+    if (totalPages <= 8) {
+      for (let i = 2; i <= totalPages; i++) {
         pages.push(i)
       }
     } else {
-      // Always show first page
-      pages.push(1)
-      
-      if (currentPage > 3) {
+      let start = Math.max(2, currentPage - halfWindow)
+      let end = Math.min(totalPages, start + windowSize - 1)
+
+      if (end === totalPages) {
+        start = Math.max(2, totalPages - windowSize + 1)
+      }
+
+      if (start > 2) {
         pages.push('...')
       }
-      
-      // Show pages around current page
-      const start = Math.max(2, currentPage - 1)
-      const end = Math.min(totalPages - 1, currentPage + 1)
-      
+
       for (let i = start; i <= end; i++) {
-        if (i !== 1 && i !== totalPages) {
-          pages.push(i)
-        }
-      }
-      
-      if (currentPage < totalPages - 2) {
-        pages.push('...')
-      }
-      
-      // Always show last page
-      if (totalPages > 1) {
-        pages.push(totalPages)
+        pages.push(i)
       }
     }
 
@@ -77,7 +68,6 @@ const Pagination = memo(function Pagination({
       className="flex justify-center items-center space-x-2 mt-12"
       aria-label="Pagination"
     >
-      {/* Previous button */}
       <button
         onClick={() => navigateToPage(currentPage - 1)}
         disabled={currentPage <= 1}
@@ -90,7 +80,6 @@ const Pagination = memo(function Pagination({
         Previous
       </button>
 
-      {/* Page numbers */}
       <div className="flex items-center space-x-1">
         {getVisiblePages().map((page, index) => (
           <div key={index}>
@@ -114,7 +103,6 @@ const Pagination = memo(function Pagination({
         ))}
       </div>
 
-      {/* Next button */}
       <button
         onClick={() => navigateToPage(currentPage + 1)}
         disabled={currentPage >= totalPages}
