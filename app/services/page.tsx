@@ -1,4 +1,4 @@
-import type { NextPage } from 'next';
+import React from 'react';
 
 interface Service {
   title: string;
@@ -6,40 +6,48 @@ interface Service {
   features: string[];
   pricing: string;
   buttonText: string;
-  color: 'emerald' | 'blue' | 'purple' | 'slate';
+  icon: React.ReactNode;
 }
 
-const Services: NextPage = () => {
+const Services = () => {
   const services: Service[] = [
     {
       title: "Resume Writing",
-      description: "Professional resume writing services to help you stand out from the competition.",
+      description: "Professional resume writing services to help you stand out from the competition and land your dream job.",
       features: [
         "ATS-optimized formatting",
-        "Industry-specific keywords",
+        "Industry-specific keywords", 
         "Professional review and editing",
         "Cover letter included"
       ],
       pricing: "Starting at KES 5,000",
       buttonText: "Get Started",
-      color: "emerald"
+      icon: (
+        <svg className="w-5 h-5 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+        </svg>
+      )
     },
     {
       title: "Interview Coaching",
-      description: "One-on-one interview coaching to boost your confidence and performance.",
+      description: "One-on-one interview coaching to boost your confidence and performance in any interview setting.",
       features: [
         "Mock interviews",
         "Behavioral question practice",
-        "Technical interview prep",
+        "Technical interview prep", 
         "Feedback and improvement tips"
       ],
       pricing: "KES 8,000 per session",
       buttonText: "Book Session",
-      color: "blue"
+      icon: (
+        <svg className="w-5 h-5 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+        </svg>
+      )
     },
     {
       title: "Career Consultation",
-      description: "Strategic career planning and guidance from industry experts.",
+      description: "Strategic career planning and guidance from industry experts to help you navigate your professional journey.",
       features: [
         "Career path analysis",
         "Skills gap assessment",
@@ -48,11 +56,15 @@ const Services: NextPage = () => {
       ],
       pricing: "KES 10,000 per hour",
       buttonText: "Schedule Call",
-      color: "purple"
+      icon: (
+        <svg className="w-5 h-5 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+        </svg>
+      )
     },
     {
       title: "HR Consulting",
-      description: "Complete HR solutions for businesses of all sizes.",
+      description: "Complete HR solutions for businesses of all sizes, from startups to established companies.",
       features: [
         "Recruitment process optimization",
         "Employee handbook creation",
@@ -61,98 +73,77 @@ const Services: NextPage = () => {
       ],
       pricing: "Contact for pricing",
       buttonText: "Get Quote",
-      color: "slate"
+      icon: (
+        <svg className="w-5 h-5 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+        </svg>
+      )
     }
   ];
 
-  const getColorClasses = (color: string) => {
-    const colorMap = {
-      emerald: "from-emerald-50 to-emerald-100/50 border-emerald-200 text-emerald-700",
-      blue: "from-blue-50 to-blue-100/50 border-blue-200 text-blue-700",
-      purple: "from-purple-50 to-purple-100/50 border-purple-200 text-purple-700",
-      slate: "from-slate-50 to-slate-100/50 border-slate-200 text-slate-700"
-    };
-    return colorMap[color as keyof typeof colorMap] || colorMap.slate;
-  };
-
-  const getServiceIcon = (index: number) => {
-    const icons = [
-      // Resume Writing
-      <path key={0} strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />,
-      // Interview Coaching
-      <path key={1} strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />,
-      // Career Consultation
-      <path key={2} strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />,
-      // HR Consulting
-      <path key={3} strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
-    ];
-    return icons[index] || icons[0];
-  };
-
   return (
-    <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div className="text-center mb-12">
-        <h1 className="text-3xl font-light text-slate-900 mb-4">
-          HR <span className="text-emerald-600 font-medium">Services</span>
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      {/* Header */}
+      <div className="text-center mb-16">
+        <h1 className="text-4xl md:text-5xl font-normal text-slate-800 mb-4">
+          HR Services
         </h1>
-        <p className="text-slate-600 max-w-2xl mx-auto">
-          Professional services to accelerate your career or streamline your hiring process
-        </p>
       </div>
-      
-      <div className="grid gap-8 md:grid-cols-2">
+
+      {/* Services Grid */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-12 max-w-4xl mx-auto">
         {services.map((service, index) => (
-          <div 
-            key={index} 
-            className="card-subtle p-6 space-y-6 group hover:scale-[1.02] transition-transform duration-200"
-            data-testid="service-card"
-          >
-            <div className="space-y-4">
-              <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${getColorClasses(service.color)} flex items-center justify-center`}>
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  {getServiceIcon(index)}
-                </svg>
+          <div key={index} className="group">
+            <div className="flex items-start space-x-4 p-2">
+              {/* Icon */}
+              <div className="flex-shrink-0 mt-1">
+                {service.icon}
               </div>
               
-              <h2 className="text-xl font-semibold text-slate-900">{service.title}</h2>
-              <p className="text-slate-600 text-sm leading-relaxed">
-                {service.description}
-              </p>
-            </div>
-
-            <ul className="space-y-2">
-              {service.features.map((feature, featureIndex) => (
-                <li key={featureIndex} className="text-sm text-slate-700 flex items-start">
-                  <div className="w-1.5 h-1.5 bg-emerald-400 rounded-full mt-2 mr-3 flex-shrink-0"></div>
-                  <span>{feature}</span>
-                </li>
-              ))}
-            </ul>
-
-            <div className="pt-4 space-y-4 border-t border-slate-100">
-              <div className="text-slate-900 font-semibold text-lg">
-                {service.pricing}
+              {/* Content */}
+              <div className="flex-1 min-w-0">
+                <h3 className="text-lg font-medium text-slate-800 mb-2">
+                  {service.title}
+                </h3>
+                <p className="text-sm text-slate-600 leading-relaxed mb-4">
+                  {service.description}
+                </p>
+                
+                {/* Features */}
+                <ul className="space-y-1 mb-4">
+                  {service.features.map((feature, featureIndex) => (
+                    <li key={featureIndex} className="text-xs text-slate-500 flex items-start">
+                      <div className="w-1 h-1 bg-emerald-400 rounded-full mt-1.5 mr-2 flex-shrink-0"></div>
+                      <span>{feature}</span>
+                    </li>
+                  ))}
+                </ul>
+                
+                {/* Pricing and Button */}
+                <div className="flex items-center justify-between">
+                  <span className="text-sm font-medium text-slate-800">
+                    {service.pricing}
+                  </span>
+                  <button className="text-xs text-emerald-600 hover:text-emerald-700 font-medium">
+                    {service.buttonText}
+                  </button>
+                </div>
               </div>
-              <button 
-                className="w-full btn-primary font-semibold"
-                aria-label={`${service.buttonText} for ${service.title}`}
-              >
-                {service.buttonText}
-              </button>
             </div>
           </div>
         ))}
       </div>
 
-      <div className="mt-16 text-center">
-        <div className="card-subtle p-8 bg-gradient-to-r from-emerald-50 to-sage-50 border-emerald-100">
-          <h3 className="text-xl font-semibold text-slate-900 mb-3">
+      {/* Call to Action */}
+      <div className="mt-20 max-w-2xl mx-auto text-center">
+        <div className="p-8 bg-slate-50 rounded-lg">
+          <h3 className="text-xl font-medium text-slate-800 mb-2">
             Need a Custom Solution?
           </h3>
-          <p className="text-slate-600 mb-6">
-            Let's discuss how we can help you achieve your HR goals
+          <p className="text-sm text-slate-600 mb-6">
+            Let's discuss how we can help you achieve your HR goals with a tailored approach.
           </p>
-          <button className="btn-accent">
+          <button className="bg-emerald-600 text-white px-6 py-2 text-sm font-medium rounded-lg hover:bg-emerald-700 transition-colors">
             Contact Us Today
           </button>
         </div>
