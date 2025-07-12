@@ -12,7 +12,7 @@ type SearchParams = {
 }
 
 interface PageProps {
-  searchParams: SearchParams
+  searchParams: Promise<SearchParams> // Update to reflect async nature
 }
 
 export const metadata: Metadata = {
@@ -66,8 +66,9 @@ async function JobList({ page }: { page: number }) {
   )
 }
 
-export default function Home({ searchParams }: PageProps) {
-  const page = parseInt(searchParams.page || '1', 10)
+export default async function Home({ searchParams }: PageProps) {
+  const params = await searchParams // Await searchParams
+  const page = parseInt(params.page || '1', 10)
   
   return (
     <div className="space-y-16">
@@ -103,6 +104,27 @@ export default function Home({ searchParams }: PageProps) {
         <Suspense fallback={<JobCardSkeleton count={8} />}>
           <JobList page={page} />
         </Suspense>
+      </section>
+
+      {/* CTA Section */}
+      <section className="text-center py-16 relative">
+        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-emerald-50/30 to-transparent rounded-3xl"></div>
+        <div className="relative z-10 space-y-4">
+          <h3 className="text-xl font-light text-slate-800">
+            Ready to find your next opportunity?
+          </h3>
+          <p className="text-slate-600 text-sm max-w-md mx-auto">
+            Join thousands of professionals who trust Monica HR to advance their careers
+          </p>
+          <div className="flex justify-center gap-2 pt-4">
+            <div className="flex -space-x-2">
+              {[...Array(5)].map((_, i) => (
+                <div key={i} className="w-8 h-8 bg-gradient-to-br from-emerald-400 to-emerald-600 rounded-full border-2 border-white"></div>
+              ))}
+            </div>
+            <span className="text-sm text-slate-500 ml-2">2,000+ success stories</span>
+          </div>
+        </div>
       </section>
     </div>
   )

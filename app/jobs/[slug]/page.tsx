@@ -6,11 +6,12 @@ import { Metadata } from 'next'
 import { headers } from 'next/headers'
 
 type Props = {
-  params: { slug: string }
+  params: Promise<{ slug: string }> // Update to reflect async nature
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const job = await getJobBySlug(params.slug)
+  const { slug } = await params // Await params
+  const job = await getJobBySlug(slug)
   
   if (!job) {
     return {
@@ -35,9 +36,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export default async function JobDetail({ params }: Props) {
-  const job = await getJobBySlug(params.slug)
-  const headersList = headers()
+  const headersList = await headers() // Await headers()
+  const { slug } = await params // Await params
   const referer = headersList.get('referer')
+  const job = await getJobBySlug(slug)
 
   if (!job) {
     notFound()

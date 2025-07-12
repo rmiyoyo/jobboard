@@ -18,6 +18,13 @@
 }
 
 @layer utilities {
+  .line-clamp-1 {
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  
   .line-clamp-2 {
     display: -webkit-box;
     -webkit-line-clamp: 2;
@@ -48,15 +55,15 @@
     white-space: normal;
   }
 
-  /* Pagination animations */
+  /* Enhanced animations */
   .fade-in {
-    animation: fadeIn 0.3s ease-in-out;
+    animation: fadeIn 0.5s ease-out;
   }
   
   @keyframes fadeIn {
     from {
       opacity: 0;
-      transform: translateY(8px);
+      transform: translateY(12px);
     }
     to {
       opacity: 1;
@@ -79,18 +86,18 @@
     }
   }
   
-  .stagger-children > * {
-    animation: slideInUp 0.4s ease-out;
+  .float-subtle {
+    animation: floatSubtle 6s ease-in-out infinite;
   }
   
-  .stagger-children > *:nth-child(1) { animation-delay: 0.05s; }
-  .stagger-children > *:nth-child(2) { animation-delay: 0.1s; }
-  .stagger-children > *:nth-child(3) { animation-delay: 0.15s; }
-  .stagger-children > *:nth-child(4) { animation-delay: 0.2s; }
-  .stagger-children > *:nth-child(5) { animation-delay: 0.25s; }
-  .stagger-children > *:nth-child(6) { animation-delay: 0.3s; }
-  .stagger-children > *:nth-child(7) { animation-delay: 0.35s; }
-  .stagger-children > *:nth-child(8) { animation-delay: 0.4s; }
+  @keyframes floatSubtle {
+    0%, 100% {
+      transform: translateY(0px);
+    }
+    50% {
+      transform: translateY(-4px);
+    }
+  }
 }
 
 @layer components {
@@ -98,20 +105,24 @@
     @apply bg-white border border-slate-200/60 shadow-sm hover:shadow-md hover:border-slate-300/60 transition-all duration-200 rounded-lg;
   }
   
+  .card-unique {
+    @apply bg-white border border-slate-200/60 shadow-sm hover:shadow-lg hover:border-slate-300/60 transition-all duration-300 rounded-lg relative overflow-hidden backdrop-blur-sm;
+  }
+  
   .btn-primary {
-    @apply bg-slate-800 text-white px-6 py-2.5 text-sm font-medium hover:bg-slate-700 transition-all duration-200 shadow-sm hover:shadow-md rounded-md focus:outline-none focus:ring-2 focus:ring-slate-500 focus:ring-offset-2;
+    @apply bg-slate-800 text-white px-6 py-2.5 text-sm font-medium hover:bg-slate-700 transition-all duration-200 shadow-sm hover:shadow-md rounded-lg focus:outline-none focus:ring-2 focus:ring-slate-500 focus:ring-offset-2 inline-flex items-center;
   }
   
   .btn-secondary {
-    @apply border border-slate-300 text-slate-700 px-6 py-2.5 text-sm font-medium hover:border-slate-400 hover:bg-slate-50 transition-all duration-200 rounded-md focus:outline-none focus:ring-2 focus:ring-slate-500 focus:ring-offset-2;
+    @apply border border-slate-300 text-slate-700 px-6 py-2.5 text-sm font-medium hover:border-slate-400 hover:bg-slate-50 transition-all duration-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-slate-500 focus:ring-offset-2;
   }
   
   .btn-accent {
-    @apply bg-emerald-600 text-white px-6 py-2.5 text-sm font-medium hover:bg-emerald-700 transition-all duration-200 shadow-sm hover:shadow-md rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2;
+    @apply bg-emerald-600 text-white px-6 py-2.5 text-sm font-medium hover:bg-emerald-700 transition-all duration-200 shadow-sm hover:shadow-md rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2;
   }
   
   .input-field {
-    @apply w-full p-3 border border-slate-300 text-sm focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500/20 transition-all duration-200 rounded-md;
+    @apply w-full p-3 border border-slate-300 text-sm focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500/20 transition-all duration-200 rounded-lg;
   }
   
   .nav-link {
@@ -122,25 +133,25 @@
     @apply text-xs text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded-full uppercase tracking-wide font-medium;
   }
   
+  .job-type-badge-modern {
+    @apply text-xs text-emerald-700 bg-emerald-50 px-3 py-1.5 rounded-lg uppercase tracking-wide font-medium border border-emerald-100;
+  }
+  
   .salary-badge {
     @apply text-sm text-slate-700 bg-slate-100 px-2.5 py-1 rounded-full font-medium;
   }
   
-  /* Pagination styles */
+  .salary-badge-modern {
+    @apply text-xs text-slate-700 bg-slate-100 px-3 py-1.5 rounded-lg font-medium border border-slate-200;
+  }
+  
+  /* Enhanced pagination styles */
   .pagination-button {
-    @apply inline-flex items-center px-3 py-2 text-sm font-medium border border-slate-300 bg-white text-slate-700 hover:bg-slate-50 hover:border-slate-400 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2;
-  }
-  
-  .pagination-button:first-child {
-    @apply rounded-l-md;
-  }
-  
-  .pagination-button:last-child {
-    @apply rounded-r-md;
+    @apply inline-flex items-center px-4 py-2 text-sm font-medium border border-slate-300 bg-white text-slate-700 hover:bg-slate-50 hover:border-slate-400 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 rounded-lg;
   }
   
   .pagination-button.active {
-    @apply bg-emerald-600 text-white border-emerald-600 hover:bg-emerald-700 hover:border-emerald-700;
+    @apply bg-emerald-600 text-white border-emerald-600 hover:bg-emerald-700 hover:border-emerald-700 shadow-sm;
   }
   
   .pagination-button:disabled {
