@@ -276,3 +276,4 @@ junit.xml
 /generated/prisma
 
 output.txt
+filepathandcontent\concat-files.ps1
