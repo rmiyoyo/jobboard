@@ -82,14 +82,6 @@ export default async function Home({ searchParams }: PageProps) {
             Connecting talent with opportunity across Africa
           </p>
         </div>
-        <div className="flex justify-center space-x-4 pt-6">
-          <Link href="/post-job" className="btn-primary">
-            Post a Job
-          </Link>
-          <Link href="/services" className="btn-secondary">
-            HR Services
-          </Link>
-        </div>
       </section>
 
       {/* Jobs Section */}
