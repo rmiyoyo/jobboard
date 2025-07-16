@@ -1,19 +1,9 @@
-// app/page.tsx
 import Link from 'next/link'
-import { getPaginatedJobs } from '@/lib/jobs'
+import { getJobs } from '@/lib/jobs'
 import { Metadata } from 'next'
 import { Suspense } from 'react'
 import JobCardSkeleton from '@/components/JobCardSkeleton'
-import JobCard from '@/components/JobCard'
-import Pagination from '@/components/Pagination'
-
-type SearchParams = {
-  page?: string
-}
-
-interface PageProps {
-  searchParams: Promise<SearchParams> // Update to reflect async nature
-}
+import JobList from '@/components/JobList'
 
 export const metadata: Metadata = {
   title: 'Find Your Next Opportunity',
@@ -24,52 +14,14 @@ export const metadata: Metadata = {
   },
 }
 
-// Enable ISR for better performance
-export const revalidate = 3600 // Revalidate every hour
+export const revalidate = 3600
 
-async function JobList({ page }: { page: number }) {
-  const { jobs, totalJobs, totalPages, currentPage, hasNextPage, hasPreviousPage } = await getPaginatedJobs(page)
-  
-  if (jobs.length === 0 && page === 1) {
-    return (
-      <div className="text-center py-12 text-slate-500">
-        <p>No jobs available at the moment. Check back soon!</p>
-      </div>
-    )
-  }
-
-  if (jobs.length === 0 && page > 1) {
-    return (
-      <div className="text-center py-12 text-slate-500">
-        <p>No jobs found on this page.</p>
-        <Link href="/" className="text-emerald-600 hover:text-emerald-700 font-medium">
-          Go to first page
-        </Link>
-      </div>
-    )
-  }
-
-  return (
-    <div className="space-y-8">
-      <div className="grid gap-6">
-        {jobs.map((job) => (
-          <JobCard key={job.id} job={job} />
-        ))}
-      </div>
-      
-      <Pagination 
-        currentPage={currentPage} 
-        totalPages={totalPages} 
-        basePath="/"
-      />
-    </div>
-  )
+async function JobsData() {
+  const jobs = await getJobs()
+  return <JobList jobs={jobs} />
 }
 
-export default async function Home({ searchParams }: PageProps) {
-  const params = await searchParams // Await searchParams
-  const page = parseInt(params.page || '1', 10)
-  
+export default function Home() {
   return (
     <div className="space-y-16">
       {/* Hero Section */}
@@ -88,13 +40,13 @@ export default async function Home({ searchParams }: PageProps) {
       <section className="space-y-8" aria-labelledby="jobs-heading">
         <div className="flex items-center justify-between">
           <h2 id="jobs-heading" className="text-2xl font-light text-slate-900">
-            {page > 1 ? `Jobs - Page ${page}` : 'Latest Jobs'}
+            Latest Jobs
           </h2>
           <div className="h-px bg-gradient-to-r from-emerald-200 to-transparent flex-1 ml-8" aria-hidden="true"></div>
         </div>
         
         <Suspense fallback={<JobCardSkeleton count={8} />}>
-          <JobList page={page} />
+          <JobsData />
         </Suspense>
       </section>
 
