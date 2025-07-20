@@ -10,17 +10,18 @@ datasource db {
 model Job {
   id          String   @id @default(cuid())
   title       String
-  slug        String   @unique
-  description String
   company     String
-  location    String?
+  location    String
   type        String
   salary      String?
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  description String
   requirements String[]
   email       String
   postedAt    DateTime @default(now())
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  slug        String   @unique
 
   @@map("jobs")
+  @@index([slug])
 }
