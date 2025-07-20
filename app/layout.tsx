@@ -100,7 +100,7 @@ export default function RootLayout({
         <footer className="border-t border-slate-200/60 mt-24 bg-slate-50/50" role="contentinfo">
           <div className="max-w-6xl mx-auto px-4 py-8">
             <p className="text-center text-slate-500 text-sm">
-              © 2024 Monica HR. All rights reserved.
+              © 2025 Monica HR. All rights reserved.
             </p>
           </div>
         </footer>
