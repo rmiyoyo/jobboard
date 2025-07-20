@@ -1,7 +1,7 @@
 import { prisma } from './db';
 import { generateUniqueSlug } from './utils';
 import { cache } from 'react';
-import { Prisma } from '@prisma/client';
+import { Job as PrismaJob } from '@prisma/client';
 
 export type Job = {
   id: string;
@@ -35,7 +35,7 @@ export const getJobs = cache(async (): Promise<Job[]> => {
       take: 50,
     });
 
-    return jobs.map((job: Prisma.JobGetPayload<{}>) => ({
+    return jobs.map((job: PrismaJob) => ({
       ...job,
       salary: job.salary === null ? undefined : job.salary,
     })) as Job[];
@@ -59,7 +59,7 @@ export const getPaginatedJobs = cache(async (page: number = 1): Promise<Paginate
     ]);
 
     return {
-      jobs: jobs.map(job => ({
+      jobs: jobs.map((job: PrismaJob) => ({
         ...job,
         salary: job.salary === null ? undefined : job.salary,
       })),
