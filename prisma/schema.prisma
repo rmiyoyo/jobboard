@@ -4,24 +4,22 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
+  url      = env("PRISMA_DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
 }
 
 model Job {
   id          String   @id @default(cuid())
   title       String
+  slug        String   @unique
+  description String
   company     String
-  location    String
+  location    String?
   type        String
   salary      String?
-  description String
-  requirements String[]
-  email       String
-  postedAt    DateTime @default(now())
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
-  slug        String   @unique
-
-  @@map("jobs")
-  @@index([slug])
 }
