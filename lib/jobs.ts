@@ -7,7 +7,7 @@ export type Job = {
   id: string;
   title: string;
   company: string;
-  location: string;
+  location: string | null;
   type: string;
   salary?: string;
   description: string;
@@ -119,9 +119,11 @@ export async function addJob(jobData: Omit<Job, 'id' | 'postedAt' | 'slug'>): Pr
   try {
     const slug = await generateUniqueSlug(jobData.title, jobData.company);
     
+    const { location, ...restJobData } = jobData;
     const job = await prisma.job.create({
       data: {
-        ...jobData,
+        ...restJobData,
+        location: location ?? '',
         slug,
       },
     });
