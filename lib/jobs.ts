@@ -3,7 +3,6 @@ import { generateUniqueSlug } from './utils';
 import { cache } from 'react';
 import { Prisma } from '@prisma/client';
 
-// Define Job type to match Prisma schema
 export type Job = {
   id: string;
   title: string;
@@ -29,7 +28,6 @@ export type PaginatedJobs = {
 
 const JOBS_PER_PAGE = 8;
 
-// Cache for all jobs (up to 50 for performance)
 export const getJobs = cache(async (): Promise<Job[]> => {
   try {
     const jobs = await prisma.job.findMany({
@@ -40,14 +38,13 @@ export const getJobs = cache(async (): Promise<Job[]> => {
     return jobs.map((job: Prisma.JobGetPayload<{}>) => ({
       ...job,
       salary: job.salary === null ? undefined : job.salary,
-    }));
+    })) as Job[];
   } catch (error) {
     console.error('Error fetching jobs:', error);
     return [];
   }
 });
 
-// Paginated function for server-side pagination
 export const getPaginatedJobs = cache(async (page: number = 1): Promise<PaginatedJobs> => {
   try {
     const skip = (page - 1) * JOBS_PER_PAGE;
@@ -62,7 +59,7 @@ export const getPaginatedJobs = cache(async (page: number = 1): Promise<Paginate
     ]);
 
     return {
-      jobs: jobs.map((job: Prisma.JobGetPayload<{}>) => ({
+      jobs: jobs.map(job => ({
         ...job,
         salary: job.salary === null ? undefined : job.salary,
       })),
@@ -85,7 +82,6 @@ export const getPaginatedJobs = cache(async (page: number = 1): Promise<Paginate
   }
 });
 
-// Client-side pagination helper
 export function paginateJobs(jobs: Job[], page: number = 1): PaginatedJobs {
   const startIndex = (page - 1) * JOBS_PER_PAGE;
   const endIndex = startIndex + JOBS_PER_PAGE;
