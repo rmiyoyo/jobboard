@@ -12,15 +12,15 @@ interface Service {
 const Services = () => {
   const services: Service[] = [
     {
-      title: "Resume Writing",
-      description: "Professional resume writing services to help you stand out from the competition and land your dream job.",
+      title: "Resume & Cover Letter Suite",
+      description: "Get a professionally written resume and cover letter that stands out to recruiters and passes through applicant tracking systems.",
       features: [
-        "ATS-optimized formatting",
-        "Industry-specific keywords", 
-        "Professional review and editing",
-        "Cover letter included"
+        "ATS-optimized resume",
+        "Tailored cover letter",
+        "Industry-specific keywords",
+        "Professional review and editing"
       ],
-      pricing: "Starting at KES 5,000",
+      pricing: "Starting at KES 6,500",
       buttonText: "Get Started",
       icon: (
         <svg className="w-5 h-5 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -29,12 +29,12 @@ const Services = () => {
       )
     },
     {
-      title: "Interview Coaching",
-      description: "One-on-one interview coaching to boost your confidence and performance in any interview setting.",
+      title: "Interview & Negotiation Coaching",
+      description: "Boost your confidence and learn to effectively communicate your value in interviews and salary negotiations.",
       features: [
-        "Mock interviews",
-        "Behavioral question practice",
-        "Technical interview prep", 
+        "Mock interviews (behavioral & technical)",
+        "Salary negotiation strategy",
+        "Confidence building",
         "Feedback and improvement tips"
       ],
       pricing: "KES 8,000 per session",
@@ -46,13 +46,13 @@ const Services = () => {
       )
     },
     {
-      title: "Career Consultation",
-      description: "Strategic career planning and guidance from industry experts to help you navigate your professional journey.",
+      title: "Career Strategy Session",
+      description: "Develop a clear and actionable roadmap for your career, from identifying opportunities to navigating your professional journey.",
       features: [
         "Career path analysis",
+        "Personalized job search strategy",
         "Skills gap assessment",
-        "Industry insights",
-        "Networking strategies"
+        "Networking guidance"
       ],
       pricing: "KES 10,000 per hour",
       buttonText: "Schedule Call",
@@ -63,8 +63,42 @@ const Services = () => {
       )
     },
     {
-      title: "HR Consulting",
-      description: "Complete HR solutions for businesses of all sizes, from startups to established companies.",
+      title: "LinkedIn Profile Optimization",
+      description: "Optimize your LinkedIn profile to attract recruiters, build your professional brand, and unlock new opportunities.",
+      features: [
+        "Keyword-optimized profile",
+        "Compelling headline and summary",
+        "Skills & endorsements strategy",
+        "Increased profile visibility"
+      ],
+      pricing: "KES 3,500",
+      buttonText: "Optimize Profile",
+      icon: (
+        <svg className="w-5 h-5 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-4 0v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"></path><circle cx="4" cy="4" r="2"></circle>
+        </svg>
+      )
+    },
+    {
+      title: "Mock Technical Interview",
+      description: "Prepare for technical interviews with realistic simulations and get expert feedback from industry professionals.",
+      features: [
+        "Role-specific technical questions",
+        "Coding challenge simulation",
+        "In-depth performance feedback",
+        "Tips for articulating thought process"
+      ],
+      pricing: "KES 12,000 per session",
+      buttonText: "Book a Mock Interview",
+      icon: (
+        <svg className="w-5 h-5 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M10 20l4-16m4 4l-4 4-4-4M6 16l-4-4 4-4"></path>
+        </svg>
+      )
+    },
+    {
+      title: "HR Consulting for Businesses",
+      description: "Comprehensive HR solutions for businesses, from optimizing recruitment processes to ensuring legal compliance.",
       features: [
         "Recruitment process optimization",
         "Employee handbook creation",
