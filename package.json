@@ -28,7 +28,7 @@
     "tailwindcss": "^3.4.0"
   },
   "prisma": {
-    "seed": "ts-node --compiler-options {\"module\":\"CommonJS\"} prisma/seed.ts"
+    "seed": "ts-node --transpile-only prisma/seed.ts"
   },
   "devDependencies": {
     "ts-node": "^10.9.2",
