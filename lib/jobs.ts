@@ -34,7 +34,7 @@ export const getJobs = cache(async (): Promise<Job[]> => {
       orderBy: { postedAt: 'desc' },
       take: 50,
     });
-
+    
     return jobs.map((job: PrismaJob) => ({
       ...job,
       salary: job.salary === null ? undefined : job.salary,
@@ -48,7 +48,6 @@ export const getJobs = cache(async (): Promise<Job[]> => {
 export const getPaginatedJobs = cache(async (page: number = 1): Promise<PaginatedJobs> => {
   try {
     const skip = (page - 1) * JOBS_PER_PAGE;
-
     const [jobs, totalJobs] = await Promise.all([
       prisma.job.findMany({
         orderBy: { postedAt: 'desc' },
@@ -103,7 +102,7 @@ export const getJobBySlug = cache(async (slug: string): Promise<Job | null> => {
     const job = await prisma.job.findUnique({
       where: { slug },
     });
-
+    
     if (!job) return null;
 
     return {
@@ -119,6 +118,7 @@ export const getJobBySlug = cache(async (slug: string): Promise<Job | null> => {
 export async function addJob(jobData: Omit<Job, 'id' | 'postedAt' | 'slug'>): Promise<Job> {
   try {
     const slug = await generateUniqueSlug(jobData.title, jobData.company);
+    
     const job = await prisma.job.create({
       data: {
         ...jobData,
