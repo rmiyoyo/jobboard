@@ -15,6 +15,7 @@
     "node": "23.6.1"
   },
   "dependencies": {
+    "@next/third-parties": "^15.4.4",
     "@prisma/client": "^6.11.1",
     "@types/node": "^20",
     "@types/react": "^18",
@@ -34,6 +35,5 @@
   },
   "prisma": {
     "seed": "ts-node --transpile-only prisma/seed.ts"
-  },
-  "devDependencies": {}
+  }
 }

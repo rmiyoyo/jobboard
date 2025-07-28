@@ -1,3 +1,4 @@
+import { GoogleAnalytics } from '@next/third-parties/google'
 import './globals.css'
 import { Inter } from 'next/font/google'
 import Link from 'next/link'
@@ -105,6 +106,7 @@ export default function RootLayout({
           </div>
         </footer>
       </body>
+      <GoogleAnalytics gaId="G-H1KV6LS6XT" />
     </html>
   )
 }
