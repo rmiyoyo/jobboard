@@ -4,6 +4,8 @@ import { Inter } from 'next/font/google'
 import Link from 'next/link'
 import { Metadata } from 'next'
 import Script from 'next/script'
+import { useEffect } from 'react'
+import { usePathname } from 'next/navigation'
 
 const inter = Inter({ 
   subsets: ['latin'],
@@ -66,6 +68,12 @@ export default function RootLayout({
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
+        
+        {/* Initialize dataLayer */}
+        <Script id="gtm-data-layer">
+          {`window.dataLayer = window.dataLayer || [];`}
+        </Script>
+        
         {/* Google Tag Manager */}
         <Script
           id="gtm-script"
@@ -91,6 +99,8 @@ export default function RootLayout({
           />
         </noscript>
         {/* End Google Tag Manager (noscript) */}
+        
+        <ClientSideGTMTracking />
         
         <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 bg-emerald-600 text-white px-4 py-2 rounded-md z-50">
           Skip to main content
@@ -134,4 +144,19 @@ export default function RootLayout({
       <GoogleAnalytics gaId="G-H1KV6LS6XT" />
     </html>
   )
+}
+
+function ClientSideGTMTracking() {
+  const pathname = usePathname()
+
+  useEffect(() => {
+    if (typeof window !== 'undefined' && window.dataLayer) {
+      window.dataLayer.push({
+        event: 'pageview',
+        page: pathname,
+      })
+    }
+  }, [pathname])
+
+  return null
 }
