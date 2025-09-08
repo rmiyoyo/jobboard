@@ -27,7 +27,6 @@ export type PaginatedJobs = {
 
 const JOBS_PER_PAGE = 8
 
-// Cache for all jobs (up to 50 for performance)
 export const getJobs = cache(async (): Promise<Job[]> => {
   try {
     const jobs = await prisma.job.findMany({
@@ -45,7 +44,6 @@ export const getJobs = cache(async (): Promise<Job[]> => {
   }
 })
 
-// New paginated function for server-side pagination
 export const getPaginatedJobs = cache(async (page: number = 1): Promise<PaginatedJobs> => {
   try {
     const skip = (page - 1) * JOBS_PER_PAGE
@@ -85,7 +83,6 @@ export const getPaginatedJobs = cache(async (page: number = 1): Promise<Paginate
   }
 })
 
-// Client-side pagination helper
 export function paginateJobs(jobs: Job[], page: number = 1): PaginatedJobs {
   const startIndex = (page - 1) * JOBS_PER_PAGE
   const endIndex = startIndex + JOBS_PER_PAGE

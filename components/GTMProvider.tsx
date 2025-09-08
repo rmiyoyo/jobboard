@@ -18,12 +18,9 @@ export function GTMProvider() {
 
   return (
     <>
-      {/* Initialize dataLayer */}
       <Script id="gtm-data-layer">
         {`window.dataLayer = window.dataLayer || [];`}
       </Script>
-      
-      {/* Google Tag Manager */}
       <Script
         id="gtm-script"
         strategy="afterInteractive"

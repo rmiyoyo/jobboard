@@ -24,7 +24,6 @@ async function JobsData() {
 export default function Home() {
   return (
     <div className="space-y-16">
-      {/* Hero Section */}
       <section className="text-center space-y-6" aria-labelledby="hero-heading">
         <div className="space-y-4">
           <h1 id="hero-heading" className="text-4xl font-light text-slate-900 tracking-tight">
@@ -35,8 +34,6 @@ export default function Home() {
           </p>
         </div>
       </section>
-
-      {/* Jobs Section */}
       <section className="space-y-8" aria-labelledby="jobs-heading">
         <div className="flex items-center justify-between">
           <h2 id="jobs-heading" className="text-2xl font-light text-slate-900">
@@ -49,8 +46,6 @@ export default function Home() {
           <JobsData />
         </Suspense>
       </section>
-
-      {/* CTA Section */}
       <section className="text-center py-16 relative">
         <div className="absolute inset-0 bg-gradient-to-r from-transparent via-emerald-50/30 to-transparent rounded-3xl"></div>
         <div className="relative z-10 space-y-4">

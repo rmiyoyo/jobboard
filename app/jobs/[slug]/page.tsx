@@ -6,11 +6,11 @@ import { Metadata } from 'next'
 import { headers } from 'next/headers'
 
 type Props = {
-  params: Promise<{ slug: string }> // Update to reflect async nature
+  params: Promise<{ slug: string }>
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { slug } = await params // Await params
+  const { slug } = await params
   const job = await getJobBySlug(slug)
   
   if (!job) {
@@ -36,8 +36,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export default async function JobDetail({ params }: Props) {
-  const headersList = await headers() // Await headers()
-  const { slug } = await params // Await params
+  const headersList = await headers()
+  const { slug } = await params
   const referer = headersList.get('referer')
   const job = await getJobBySlug(slug)
 
@@ -45,7 +45,6 @@ export default async function JobDetail({ params }: Props) {
     notFound()
   }
 
-  // Determine if the user came from a jobs list page
   const isFromJobsList = referer?.includes('/jobs') || 
                         referer?.includes('/?page=') || 
                         referer?.includes('page=') || 

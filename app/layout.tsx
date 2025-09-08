@@ -69,7 +69,6 @@ export default function RootLayout({
         <GTMProvider />
       </head>
       <body className={inter.className}>
-        {/* Google Tag Manager (noscript) */}
         <noscript>
           <iframe
             src="https://www.googletagmanager.com/ns.html?id=GTM-K465PW9C"
@@ -113,7 +112,7 @@ export default function RootLayout({
         <footer className="border-t border-slate-200/60 mt-24 bg-slate-50/50" role="contentinfo">
           <div className="max-w-6xl mx-auto px-4 py-8">
             <p className="text-center text-slate-500 text-sm">
-              © 2025 Monica HR. All rights reserved.
+              &copy; {new Date().getFullYear()} Monica HR. All rights reserved.
             </p>
           </div>
         </footer>

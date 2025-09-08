@@ -13,7 +13,6 @@ export function useFilteredJobs(jobs: Job[]) {
   
   const [debouncedSearch, setDebouncedSearch] = useState('')
   
-  // Debounce search
   useEffect(() => {
     const timer = setTimeout(() => {
       setDebouncedSearch(filters.search)
@@ -21,17 +20,14 @@ export function useFilteredJobs(jobs: Job[]) {
     return () => clearTimeout(timer)
   }, [filters.search])
   
-  // Extract unique values for filter options
   const filterOptions = useMemo(() => {
     const types = Array.from(new Set(jobs.map(job => job.type))).sort()
     const locations = Array.from(new Set(jobs.map(job => job.location))).sort()
     return { types, locations }
   }, [jobs])
   
-  // Filter jobs
   const filteredJobs = useMemo(() => {
     return jobs.filter(job => {
-      // Search filter
       if (debouncedSearch) {
         const searchTerm = debouncedSearch.toLowerCase()
         const matchesSearch = 
@@ -41,12 +37,10 @@ export function useFilteredJobs(jobs: Job[]) {
         if (!matchesSearch) return false
       }
       
-      // Type filter
       if (filters.type.length > 0 && !filters.type.includes(job.type)) {
         return false
       }
       
-      // Location filter
       if (filters.location.length > 0 && !filters.location.includes(job.location)) {
         return false
       }

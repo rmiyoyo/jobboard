@@ -117,24 +117,18 @@ const Services = () => {
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-      {/* Header */}
       <div className="text-center mb-16">
         <h1 className="text-4xl md:text-5xl font-normal text-slate-800 mb-4">
           HR Services
         </h1>
       </div>
-
-      {/* Services Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-12 max-w-4xl mx-auto">
         {services.map((service, index) => (
           <div key={index} className="group">
             <div className="flex items-start space-x-4 p-2">
-              {/* Icon */}
               <div className="flex-shrink-0 mt-1">
                 {service.icon}
               </div>
-              
-              {/* Content */}
               <div className="flex-1 min-w-0">
                 <h3 className="text-lg font-medium text-slate-800 mb-2">
                   {service.title}
@@ -142,8 +136,6 @@ const Services = () => {
                 <p className="text-sm text-slate-600 leading-relaxed mb-4">
                   {service.description}
                 </p>
-                
-                {/* Features */}
                 <ul className="space-y-1 mb-4">
                   {service.features.map((feature, featureIndex) => (
                     <li key={featureIndex} className="text-xs text-slate-500 flex items-start">
@@ -152,8 +144,6 @@ const Services = () => {
                     </li>
                   ))}
                 </ul>
-                
-                {/* Pricing and Button */}
                 <div className="flex items-center justify-between">
                   <span className="text-sm font-medium text-slate-800">
                     {service.pricing}
@@ -167,8 +157,6 @@ const Services = () => {
           </div>
         ))}
       </div>
-
-      {/* Call to Action */}
       <div className="mt-20 max-w-2xl mx-auto text-center">
         <div className="p-8 bg-slate-50 rounded-lg">
           <h3 className="text-xl font-medium text-slate-800 mb-2">

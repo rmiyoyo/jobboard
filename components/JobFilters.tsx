@@ -44,7 +44,6 @@ export default function JobFilters({
   
   return (
     <div className="space-y-4">
-      {/* Search */}
       <div className="relative">
         <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-slate-400" />
         <input
@@ -55,8 +54,6 @@ export default function JobFilters({
           className="input-field pl-10"
         />
       </div>
-      
-      {/* Filter Toggle */}
       <div className="flex items-center justify-between">
         <button
           onClick={() => setIsExpanded(!isExpanded)}
@@ -75,8 +72,6 @@ export default function JobFilters({
           </button>
         )}
       </div>
-      
-      {/* Active Filters */}
       {hasActiveFilters && (
         <div className="flex flex-wrap gap-2">
           {filters.type.map(type => (
@@ -97,11 +92,8 @@ export default function JobFilters({
           ))}
         </div>
       )}
-      
-      {/* Collapsible Filter Options */}
       {isExpanded && (
         <div className="grid md:grid-cols-2 gap-6 p-4 bg-slate-50 rounded-lg">
-          {/* Job Types */}
           <div>
             <h3 className="font-medium text-slate-900 mb-3">Job Type</h3>
             <div className="space-y-2">
@@ -118,8 +110,6 @@ export default function JobFilters({
               ))}
             </div>
           </div>
-          
-          {/* Locations */}
           <div>
             <h3 className="font-medium text-slate-900 mb-3">Location</h3>
             <div className="space-y-2">

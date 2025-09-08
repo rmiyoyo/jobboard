@@ -21,7 +21,6 @@ export default function Pagination({
     if (onPageChange) {
       onPageChange(page)
     } else {
-      // For server-side pagination (existing behavior)
       window.location.href = `${basePath}?page=${page}`
     }
   }
